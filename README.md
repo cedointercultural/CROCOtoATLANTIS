@@ -1,5 +1,7 @@
 # croco2atlantis
 
+**Español** | [English](README.en.md)
+
 Herramienta en Python para convertir salidas del modelo oceánico [CROCO](https://www.croco-ocean.org/) en los forzantes hidrográficos del modelo de ecosistemas [ATLANTIS](https://github.com/Atlantis-Ecosystem-Model): temperatura, salinidad e intercambio de agua entre cajas y capas.
 
 **Autor:** Ricardo Cavieses.
