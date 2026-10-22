@@ -47,3 +47,10 @@ docs/interno/
 examples/goc/
 scratch/
 CLAUDE.md
+
+# R artifacts
+.Rhistory
+.RData
+.Rproj.user/
+*.Rcheck/
+croco2atlantis_*.tar.gz

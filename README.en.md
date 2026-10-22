@@ -21,6 +21,7 @@ A Python tool to convert output from the [CROCO](https://www.croco-ocean.org/) o
 | `writers/atlantis_nc.py` | Pending | Writes `exchange`, `dest_b`, `dest_k`, temperature and salinity |
 | `validate.py` | Pending | Volume, continuity, physical ranges and layer order |
 | `cli.py` | Pending | CLI with YAML configuration |
+| `r/` (R package) | Done and tested | R interface to the finished modules, through `reticulate` (see [r/README.md](r/README.md), in Spanish) |
 
 ## Installation and tests
 
@@ -97,6 +98,15 @@ inflow = fluxes.net_inflow(faces, q)                          # budget per box a
 
 `centroids` is a (box, 2) array in metres in the BGM projection, for example the interior points of the boxes: `numpy.array([b.inside for b in bgm.boxes])`.
 
+### Usage from R
+
+The R package in `r/` calls these same modules through `reticulate` and returns data frames and `sf` objects; the computation stays in Python. Installation and an example are in [r/README.md](r/README.md):
+
+```r
+remotes::install_github("rcavieses/CROCOtoATLANTIS", subdir = "r")
+croco2atlantis::install_croco2atlantis()   # Python virtualenv with the package
+```
+
 ## Pending decisions
 
 - **Open boundary:** which ATLANTIS box receives the water that enters or leaves through CROCO's open boundaries (box −1): the neighbouring box outside the domain or a boundary box.
@@ -107,6 +117,11 @@ inflow = fluxes.net_inflow(faces, q)                          # budget per box a
 - **Boxes outside the CROCO domain:** whether to fill them (and with what `max_distance`) or leave them without data.
 
 ## Change log
+
+### 2026-10-22: R package
+
+- New R package in `r/`: reads the BGM (boxes and faces as `sf`) and CROCO, assigns cells to boxes, computes box-layer means and the transport between boxes by calling the Python code through `reticulate`. `install_croco2atlantis()` creates the Python virtualenv.
+- In R, `layer` and `time` count from 1; `box` keeps the BGM box number, from 0.
 
 ### 2026-10-22: code and logic review
 
@@ -139,6 +154,7 @@ src/croco2atlantis/
   validate.py
   cli.py
 tests/
+r/                      # R package (interface through reticulate)
 examples/
 ```
 

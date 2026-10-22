@@ -1,0 +1,30 @@
+Package: croco2atlantis
+Type: Package
+Title: Convert 'CROCO' Ocean Model Output into 'ATLANTIS' Forcing
+Version: 0.0.1
+Authors@R:
+    person("Ricardo", "Cavieses", , "rcavieses@gmail.com", role = c("aut", "cre"))
+Description: R interface to the 'croco2atlantis' Python package, which
+    converts output of the 'CROCO' ocean model into the hydrographic
+    forcing of the 'ATLANTIS' ecosystem model. It reads 'ATLANTIS' BGM
+    geometry, maps 'CROCO' cells to boxes, computes volume-weighted means
+    per box and layer and the water transport between boxes. All the
+    computation is done in Python through 'reticulate'; this package only
+    calls it and returns R data frames and 'sf' objects.
+License: GPL-3
+URL: https://github.com/rcavieses/CROCOtoATLANTIS
+BugReports: https://github.com/rcavieses/CROCOtoATLANTIS/issues
+SystemRequirements: Python (>= 3.10) with the 'croco2atlantis' package
+    (install it with install_croco2atlantis())
+Depends:
+    R (>= 4.1.0)
+Imports:
+    reticulate (>= 1.28),
+    sf
+Suggests:
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Encoding: UTF-8
+Language: en-US
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3

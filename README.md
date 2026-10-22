@@ -21,6 +21,7 @@ Herramienta en Python para convertir salidas del modelo oceánico [CROCO](https:
 | `writers/atlantis_nc.py` | Pendiente | Escritura de `exchange`, `dest_b`, `dest_k`, temperatura y salinidad |
 | `validate.py` | Pendiente | Volumen, continuidad, rangos físicos y orden de capas |
 | `cli.py` | Pendiente | CLI con configuración en YAML |
+| `r/` (paquete de R) | Hecho y probado | Interfaz de R a los módulos hechos, con `reticulate` (ver [r/README.md](r/README.md)) |
 
 ## Instalación y pruebas
 
@@ -97,6 +98,15 @@ inflow = fluxes.net_inflow(faces, q)                          # balance por caja
 
 `centroids` es un arreglo (caja, 2) en metros en la proyección del BGM, por ejemplo los puntos interiores de las cajas: `numpy.array([b.inside for b in bgm.boxes])`.
 
+### Uso desde R
+
+El paquete de R en `r/` llama a estos mismos módulos con `reticulate` y devuelve data frames y objetos `sf`; el cálculo sigue en Python. Instalación y ejemplo en [r/README.md](r/README.md):
+
+```r
+remotes::install_github("rcavieses/CROCOtoATLANTIS", subdir = "r")
+croco2atlantis::install_croco2atlantis()   # virtualenv de Python con el paquete
+```
+
 ## Decisiones pendientes
 
 - **Frontera abierta:** a qué caja de ATLANTIS se asigna el agua que entra o sale por las fronteras abiertas de CROCO (caja −1): la caja vecina fuera del dominio o una caja de frontera.
@@ -107,6 +117,11 @@ inflow = fluxes.net_inflow(faces, q)                          # balance por caja
 - **Cajas fuera del dominio de CROCO:** si se rellenan (y con qué `max_distance`) o se dejan sin datos.
 
 ## Registro de cambios
+
+### 2026-10-22: paquete de R
+
+- Nuevo paquete de R en `r/`: lee el BGM (cajas y caras como `sf`) y CROCO, asigna celdas a cajas, calcula medias por caja y capa y el transporte entre cajas llamando al código de Python con `reticulate`. `install_croco2atlantis()` crea el virtualenv de Python.
+- En R, `layer` y `time` cuentan desde 1; `box` conserva el número de caja del BGM, desde 0.
 
 ### 2026-10-22: revisión del código y la lógica
 
@@ -139,6 +154,7 @@ src/croco2atlantis/
   validate.py
   cli.py
 tests/
+r/                      # paquete de R (interfaz con reticulate)
 examples/
 ```
 
